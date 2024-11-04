@@ -13,11 +13,12 @@ def main():
     # Ensure database directory exists
     os.makedirs("db", exist_ok=True)
 
-    # Initialize Chroma client with persistent storage
-    client = chromadb.Client(Settings(
-        chroma_db_impl="duckdb+parquet",
-        persist_directory="db/"  # Directory to store the database
-    ))
+    # Initialize Chroma client with persistent storage (updated configuration)
+    client = chromadb.Client(
+        chromadb.PersistentClientConfig(
+            path="db/"  # Directory to store the database
+        )
+    )
 
     # Create or get a collection in Chroma
     collection = client.create_collection(name="markdown_documents")
